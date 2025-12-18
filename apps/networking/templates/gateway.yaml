@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: tailscale-gateway
+  namespace: networking
+  annotations:
+    tailscale.com/expose: "true"
+    tailscale.com/hostname: "ingress"
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.overburrow.dev"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: overburrow-wildcard-tls
