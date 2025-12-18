@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infisical
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3" # wait for cnpg and redis
+spec:
+  project: default
+  sources:
+    - repoURL: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
+      chart: infisical-standalone
+      targetRevision: 1.7.2
+      helm:
+        valueFiles:
+          - $values/apps/infisical/values.yaml
+    - repoURL: https://github.com/overburrow/charts.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: infisical
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

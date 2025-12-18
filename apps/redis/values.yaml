@@ -1,0 +1,10 @@
+architecture: standalone
+auth:
+  enabled: false
+master:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+  persistence:
+    enabled: false # Memory-only cache is fine for this

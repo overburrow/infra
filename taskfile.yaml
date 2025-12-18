@@ -42,6 +42,7 @@ tasks:
 
   secret:cnpg:
     vars:
+      PG_USER: postgres
       PG_PASSWORD:
         sh: openssl rand -base64 24
     cmds:
@@ -50,6 +51,31 @@ tasks:
       - |
         kubectl create secret generic cnpg-superuser-secret \
           --namespace database \
-          --from-literal=username=postgres \
+          --from-literal=username={{.PG_USER}} \
           --from-literal=password="{{.PG_PASSWORD}}" \
+          --dry-run=client -o yaml | kubectl apply -f -
+
+  secret:infisical:
+    vars:
+      DB_CLUSTER_NAME: postgres
+      DB_POD:
+        sh: kubectl get pod -n database -l cnpg.io/cluster=shared,cnpg.io/instanceRole=primary -o jsonpath='{.items[0].metadata.name}'
+      DB_NAME: infisical
+      DB_USER: infisical
+      DB_PASSWORD:
+        sh: openssl rand -base64 24
+      AUTH_SECRET:
+        sh: openssl rand -hex 32
+      ENCRYPTION_KEY:
+        sh: openssl rand -hex 16
+    cmds:
+      - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE USER {{.DB_USER}} WITH ENCRYPTED PASSWORD '{{.DB_PASSWORD}}';" || echo "User likely exists, skipping..."
+      - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE DATABASE {{.DB_NAME}} OWNER {{.DB_USER}};" || echo "DB likely exists, skipping..."
+      - |
+        kubectl create secret generic infisical-secrets \
+          --namespace infisical \
+          --from-literal=DB_CONNECTION_URI="postgresql://{{.DB_USER}}:{{.DB_PASSWORD}}@{{.DB_CLUSTER_NAME}}-rw.database.svc:5432/{{.DB_NAME}}" \
+          --from-literal=AUTH_SECRET="{{.AUTH_SECRET}}" \
+          --from-literal=ENCRYPTION_KEY="{{.ENCRYPTION_KEY}}" \
+          --from-literal=REDIS_URL="redis://redis-master.redis.svc:6379" \
           --dry-run=client -o yaml | kubectl apply -f -
