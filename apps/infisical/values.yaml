@@ -12,8 +12,9 @@ resources:
     cpu: 500m
 
 ingress:
-  nginx:
-    enabled: false
+  enabled: false
+  # nginx:
+  #   enabled: false
 
 infisical:
   service:
