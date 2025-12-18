@@ -4,7 +4,7 @@ metadata:
   name: infisical
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "3" # wait for cnpg and redis
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   project: default
   sources:

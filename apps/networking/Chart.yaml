@@ -1,0 +1,4 @@
+apiVersion: v2
+name: networking
+version: 0.1.0
+dependencies: [] # Local templates only

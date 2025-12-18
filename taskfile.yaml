@@ -81,15 +81,9 @@ tasks:
       - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "ALTER USER {{.DB_USER}} WITH ENCRYPTED PASSWORD '{{.DB_PASSWORD}}';" || echo "User likely exists, skipping..."
       - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE DATABASE {{.DB_NAME}} OWNER {{.DB_USER}};" || echo "DB likely exists, skipping..."
 
-  # db:infisical:
-  #   vars:
-  #     DB_CLUSTER_NAME: postgres
-  #     DB_POD:
-  #       sh: kubectl get pod -n database -l cnpg.io/cluster={{.DB_CLUSTER_NAME}},cnpg.io/instanceRole=primary -o jsonpath='{.items[0].metadata.name}'
-  #     DB_NAME: infisical
-  #     DB_USER: infisical
-  #     DB_PASSWORD:
-  #       sh: kubectl get secret -n infisical infisical-secrets -o jsonpath='{.data.}'
-  #   cmds:
-  #     - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE USER {{.DB_USER}};" || echo "User likely exists, skipping..."
-  #     - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE DATABASE {{.DB_NAME}} OWNER {{.DB_USER}};" || echo "DB likely exists, skipping..."
+  secret:cert-manager:
+    cmds:
+      - |
+        kubectl create secret generic cloudflare-api-token \
+          --namespace cert-manager \
+          --from-literal=api-token=$CLOUDFLARE_API_TOKEN
