@@ -1,0 +1,37 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: database
+spec:
+  instances: 2
+
+  bootstrap:
+    initdb:
+      database: postgres
+      owner: postgres
+      secret:
+        name: cnpg-superuser-secret
+
+  storage:
+    size: 20Gi
+    storageClass: local-path
+
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+
+  # 5. Backup Configuration (Optional but Recommended)
+  # Writes Write-Ahead Logs (WAL) to a PVC for point-in-time recovery.
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: s3://backups/ # Placeholder if you add S3 later
+  #     wal:
+  #       compression: gzip
+  #     data:
+  #       compression: gzip
+  #   retentionPolicy: "7d"

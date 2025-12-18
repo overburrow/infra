@@ -1,0 +1,22 @@
+redis:
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "100m"
+
+controller:
+  replicas: 1
+repoServer:
+  replicas: 1
+applicationSet:
+  replicas: 1
+server:
+  replicas: 1
+  service:
+    annotations:
+      "tailscale.com/expose": "true"
+
+configs:
+  params:
+    "server.disable.auth": "true"
+    "server.insecure": "true"

@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: 3
+
+dotenv:
+  - .env
+
+tasks:
+  cilium:
+    cmds:
+      - chmod +x ./scripts/install/cilium.sh
+      - ./scripts/install/cilium.sh
+
+  tailscale:
+    cmds:
+      - chmod +x ./scripts/install/tailscale.sh
+      - ./scripts/install/tailscale.sh
+
+  argocd:
+    cmds:
+      - chmod +x ./scripts/install/argocd.sh
+      - ./scripts/install/argocd.sh
+
+  secret:cnpg:
+    cmds:
+      - chmod +x ./scripts/secrets/cnpg.sh
+      - ./scripts/secrets/cnpg.sh
