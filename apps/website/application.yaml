@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: website
+  namespace: argocd
+  annotations:
+    # 1. Enable the updater for this app
+    argocd-image-updater.argoproj.io/image-list: website=ghcr.io/overburrow/website
+    
+    # 2. Update strategy (e.g., use the latest generic tag, or latest sha)
+    argocd-image-updater.argoproj.io/website.update-strategy: latest
+    
+    # 3. Allow it to write back to Git (required for Helm)
+    argocd-image-updater.argoproj.io/write-back-method: git
+spec:
+  source:
+    helm:
+      # The updater will set 'image.tag' in your values to the new version
+      parameters:
+        - name: image.tag
+          value: latest
