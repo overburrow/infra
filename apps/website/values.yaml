@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/overburrow/website
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: "latest"
 
 service:
