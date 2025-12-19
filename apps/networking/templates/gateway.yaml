@@ -13,18 +13,6 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "{{ .Values.domain }}"
-      allowedRoutes:
-        namespaces:
-          from: All
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: overburrow-wildcard-tls
-    - name: https
-      protocol: HTTPS
-      port: 443
-      hostname: "*.{{ .Values.domain }}"
       allowedRoutes:
         namespaces:
           from: All
