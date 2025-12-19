@@ -13,7 +13,7 @@ spec:
     path: apps/networking
   destination:
     server: https://kubernetes.default.svc
-    namespace: networking
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
