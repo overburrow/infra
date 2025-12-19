@@ -4,9 +4,7 @@ config:
       api_url: https://ghcr.io
       prefix: ghcr.io
       ping: yes
-      # You will need to create a generic K8s secret named 'ghcr-secret'
-      # with key 'token' containing a PAT with 'read:packages' scope
-      credentials: secret:argocd/ghcr-credentials#token
+      credentials: secret:argocd/argocd-image-updater-secrets#GHCR_TOKEN
 
 authScripts:
   git-creds: |
@@ -18,5 +16,5 @@ extraEnv:
   - name: GIT_TOKEN
     valueFrom:
       secretKeyRef:
-        name: argocd-image-updater-git-token
-        key: token
+        name: argocd-image-updater-secrets
+        key: GITHUB_TOKEN
