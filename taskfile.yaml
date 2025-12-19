@@ -80,7 +80,7 @@ tasks:
           --from-literal=SMTP_FROM_NAME=Infisical \
           --dry-run=client -o yaml | kubectl apply -f -
       - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE USER {{.DB_USER}};" || true
-      - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "ALTER USER {{.DB_USER}} WITH ENCRYPTED PASSWORD '{{.DB_PASSWORD}}';" || echo "User likely exists, skipping..."
+      - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "ALTER USER {{.DB_USER}} WITH ENCRYPTED PASSWORD '$INFISICAL_DB_PASSWORD';" || echo "User likely exists, skipping..."
       - kubectl exec -n database -i {{.DB_POD}} -- psql -U postgres -c "CREATE DATABASE {{.DB_NAME}} OWNER {{.DB_USER}};" || echo "DB likely exists, skipping..."
       # Universal machine identity authentication
       - |
