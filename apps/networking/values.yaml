@@ -1,0 +1,4 @@
+domain: overburrow.dev
+email: ethantlee21@gmail.com
+tailscale:
+  hostname: ingress
