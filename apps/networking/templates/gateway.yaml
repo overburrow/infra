@@ -5,6 +5,10 @@ metadata:
   namespace: networking
 spec:
   gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      tailscale.com/expose: "true"
+      tailscale.com/hostname: "ingress"
   listeners:
     - name: https
       protocol: HTTPS
@@ -14,14 +18,3 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: overburrow-wildcard-tls
----
-apiVersion: cilium.io/v2alpha1
-kind: CiliumGatewayClassConfig
-metadata:
-  name: tailscale-gateway-config
-  namespace: networking
-spec:
-  service:
-    annotations:
-      tailscale.com/expose: "true"
-      tailscale.com/hostname: "ingress"
