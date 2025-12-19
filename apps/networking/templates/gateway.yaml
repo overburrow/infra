@@ -37,3 +37,6 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: overburrow-wildcard-tls
+      allowedRoutes:
+        namespaces:
+          from: All
