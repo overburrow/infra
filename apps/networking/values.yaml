@@ -2,3 +2,15 @@ domain: overburrow.dev
 email: ethantlee21@gmail.com
 tailscale:
   hostname: ingress
+
+routes:
+  - name: argocd
+    namespace: argocd
+    hostname: "argocd.overburrow.dev"
+    serviceName: argocd-server
+    servicePort: 80
+  - name: infisical
+    namespace: infisical
+    hostname: "infisical.overburrow.dev"
+    serviceName: infisical-standalone
+    servicePort: 8080
