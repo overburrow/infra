@@ -14,3 +14,8 @@ routes:
     hostname: "infisical.overburrow.dev"
     serviceName: infisical-infisical-standalone-infisical
     servicePort: 8080
+  - name: website
+    namespace: website
+    hostname: "overburrow.dev"
+    serviceName: website
+    servicePort: 80
