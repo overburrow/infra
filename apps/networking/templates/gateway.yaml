@@ -1,42 +1,23 @@
-apiVersion: cilium.io/v2alpha1
-kind: CiliumGatewayClassConfig
-metadata:
-  name: tailscale-gateway-config
-  namespace: networking
-spec:
-  service:
-    annotations:
-      tailscale.com/expose: "true"
-      tailscale.com/hostname: "ingress"
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: GatewayClass
-metadata:
-  name: cilium-tailscale
-spec:
-  controllerName: io.cilium/gateway-controller
-  parametersRef:
-    group: cilium.io
-    kind: CiliumGatewayClassConfig
-    name: tailscale-gateway-config
-    namespace: networking
----
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: tailscale-gateway
   namespace: networking
 spec:
-  gatewayClassName: cilium-tailscale
+  gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      tailscale.com/expose: "true"
+      tailscale.com/hostname: "ingress"
   listeners:
     - name: https
       protocol: HTTPS
       port: 443
       hostname: "*.{{ .Values.domain }}"
+      allowedRoutes:
+        namespaces:
+          from: All
       tls:
         mode: Terminate
         certificateRefs:
           - name: overburrow-wildcard-tls
-      allowedRoutes:
-        namespaces:
-          from: All
