@@ -25,3 +25,8 @@ kubeProxyReplacement: true
 k8sClientRateLimit:
   qps: 50
   burst: 100
+
+MTU: 1200
+
+encryption:
+  enabled: false # let tailscale handle the security
