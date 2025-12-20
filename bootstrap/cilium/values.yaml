@@ -36,7 +36,7 @@ routingMode: native
 autoDirectNodeRoutes: false
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
 
-devices: "tailscale0"
+devices: "tailscale0,wlan0"
 directRoutingDevice: "tailscale0"
 
 bpf:
