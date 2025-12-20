@@ -7,7 +7,7 @@ spec:
   externalIPs: true
   loadBalancerIPs: true
   interfaces:
-    - ^eth0$
+    - ^wlan0$
   serviceSelector:
     matchLabels:
       io.cilium.gateway/owning-gateway: public-gateway
