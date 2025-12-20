@@ -4,6 +4,6 @@ image:
   tag: "66308013fb7a71c1bbc04f4d26f0fe837133bf2f"
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
   targetPort: 3000
