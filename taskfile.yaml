@@ -13,18 +13,6 @@ tasks:
           --create-namespace \
           -f bootstrap/traefik/values.yaml
 
-  setup:tailscale:
-    cmds:
-      - helm repo add tailscale https://pkgs.tailscale.com/helmcharts
-      - helm repo update
-      - |
-        helm upgrade --install tailscale-operator tailscale/tailscale-operator \
-          --namespace=tailscale \
-          --create-namespace \
-          --set-string oauth.clientId=$TAILSCALE_CLIENT_ID \
-          --set-string oauth.clientSecret=$TAILSCALE_CLIENT_SECRET \
-          --wait
-
   setup:argocd:
     cmds:
       - helm repo add argo https://argoproj.github.io/argo-helm

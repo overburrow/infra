@@ -1,0 +1,4 @@
+oauth:
+  secretName: operator-oauth
+  clientIdKey: client_id
+  clientSecretKey: client_secret

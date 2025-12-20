@@ -12,11 +12,8 @@ spec:
       chart: tailscale-operator
       targetRevision: 1.78.1
       helm:
-        parameters:
-          - name: oauth.clientId
-            value: $TAILSCALE_CLIENT_ID
-          - name: oauth.clientSecret
-            value: $TAILSCALE_CLIENT_SECRET
+        valueFiles:
+          - $infra/apps/tailscale/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: tailscale
