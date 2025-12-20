@@ -8,15 +8,22 @@ spec:
   infrastructure:
     annotations:
       tailscale.com/expose: "true"
-      tailscale.com/hostname: "ingress"
+      tailscale.com/hostname: {{ .Values.gateways.private.tailscaleHostname | quote }}
   listeners:
-    - name: https
-      protocol: HTTPS
-      port: 443
+    {{- range .Values.gateways.private.listeners }}
+    - name: {{ .name }}
+      protocol: {{ .protocol }}
+      port: {{ .port }}
+      {{- if .hostname }}
+      hostname: {{ .hostname | quote }}
+      {{- end }}
       allowedRoutes:
         namespaces:
           from: All
+      {{- if eq .protocol "HTTPS" }}
       tls:
         mode: Terminate
         certificateRefs:
-          - name: overburrow-wildcard-tls
+          - name: {{ .tlsSecret }}
+      {{- end }}
+    {{- end }}

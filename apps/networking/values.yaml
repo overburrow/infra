@@ -1,21 +1,45 @@
-domain: overburrow.dev
-email: ethantlee21@gmail.com
-tailscale:
-  hostname: ingress
+certificates:
+  - domain: "overburrow.dev"
+    secretName: "overburrow-dev-tls"
+  - domain: "overburrow.org"
+    secretName: "overburrow-org-tls"
+
+gateways:
+  public:
+    listeners:
+      - name: http
+        port: 80
+        protocol: HTTP
+        hostname: null # null means "match all" for redirection
+      
+      - name: https-org
+        port: 443
+        protocol: HTTPS
+        hostname: "*.overburrow.org"
+        tlsSecret: overburrow-org-tls
+
+  private:
+    tailscaleHostname: ingress
+    listeners:
+      - name: https-dev
+        port: 443
+        protocol: HTTPS
+        hostname: "*.overburrow.dev"
+        tlsSecret: overburrow-dev-tls
 
 routes:
   - name: argocd
     namespace: argocd
-    hostname: "argocd.overburrow.dev"
     serviceName: argocd-server
     servicePort: 80
+    hostname: "argocd.overburrow.dev"
   - name: infisical
     namespace: infisical
-    hostname: "infisical.overburrow.dev"
     serviceName: infisical-infisical-standalone-infisical
     servicePort: 8080
+    hostname: "infisical.overburrow.dev"
   - name: website
     namespace: website
-    hostname: "overburrow.dev"
     serviceName: website
     servicePort: 80
+    hostname: "overburrow.dev"

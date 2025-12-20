@@ -1,14 +1,17 @@
+{{- range .Values.certificates }}
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: overburrow-wildcard
+  name: {{ .domain | replace "." "-" }}-cert
   namespace: networking
 spec:
-  secretName: overburrow-wildcard-tls
+  secretName: {{ .secretName }}
   issuerRef:
     name: letsencrypt-dns
     kind: ClusterIssuer
-  commonName: "*.overburrow.dev"
+  commonName: "*.{{ .domain }}"
   dnsNames:
-    - "*.overburrow.dev"
-    - "overburrow.dev"
+    - "*.{{ .domain }}"
+    - "{{ .domain }}"
+---
+{{- end }}

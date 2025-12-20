@@ -6,21 +6,20 @@ metadata:
 spec:
   gatewayClassName: cilium
   listeners:
-    - name: http
-      protocol: HTTP
-      port: 80
-      hostname: "*.{{ .Values.domain }}"
+    {{- range .Values.gateways.public.listeners }}
+    - name: {{ .name }}
+      protocol: {{ .protocol }}
+      port: {{ .port }}
+      {{- if .hostname }}
+      hostname: {{ .hostname | quote }}
+      {{- end }}
       allowedRoutes:
         namespaces:
           from: All
-
-    - name: https
-      protocol: HTTPS
-      port: 443
-      allowedRoutes:
-        namespaces:
-          from: All
+      {{- if eq .protocol "HTTPS" }}
       tls:
         mode: Terminate
         certificateRefs:
-          - name: overburrow-wildcard-tls
+          - name: {{ .tlsSecret }}
+      {{- end }}
+    {{- end }}
