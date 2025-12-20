@@ -1,4 +1,6 @@
 config:
+  git.user: obbot
+  git.email: obbot@overburrow.org
   registries:
     - name: GitHub Container Registry
       api_url: https://ghcr.io

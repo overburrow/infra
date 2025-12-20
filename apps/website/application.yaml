@@ -5,11 +5,6 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "4"
-    argocd-image-updater.argoproj.io/image-list: website=ghcr.io/overburrow/website
-    argocd-image-updater.argoproj.io/website.update-strategy: latest
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/website.helm.image-tag: image.tag
-    argocd-image-updater.argoproj.io/website.ignore-tags: latest
 spec:
   project: default
   source:

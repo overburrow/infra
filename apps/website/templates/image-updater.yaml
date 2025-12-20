@@ -1,0 +1,25 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: website-updater
+  namespace: argocd
+spec:
+  namespace: argocd
+  commonUpdateSettings:
+    updateStrategy: "latest"
+    ignoreTags:
+      - "latest"
+  writeBackFConfig:
+    method: "git"
+    gitConfig:
+      repository: "git@github.com:overburrow/infra.git"
+      branch: "main"
+      writeBackTarget: "helmvalues:apps/website/values.yaml"
+  applicationRefs:
+    - namePattern: "website"
+      images:
+        - imageName: "ghcr.io/overburrow/website"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
