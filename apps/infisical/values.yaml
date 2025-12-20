@@ -8,8 +8,8 @@ postgresql:
 
 resources:
   limits:
-    memory: 512Mi
-    cpu: 1
+    memory: 1Gi
+    cpu: 500m
 
 ingress:
   enabled: false
