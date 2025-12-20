@@ -40,6 +40,7 @@ devices: "tailscale0,wlan0"
 directRoutingDevice: "tailscale0"
 
 bpf:
+  masquerade: false
   tproxy: true
 
 k8s:
