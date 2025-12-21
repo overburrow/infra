@@ -1,7 +1,3 @@
 oauth:
   clientId: client_id
   clientSecret: client_secret
-
-experimental:
-  kubernetesGateway:
-    enabled: true
