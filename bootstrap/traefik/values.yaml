@@ -1,4 +1,3 @@
-# Traefik Helm Values
 service:
   enabled: true
   type: LoadBalancer
