@@ -7,15 +7,15 @@ certificates:
 gateways:
   public:
     listeners:
-      - name: web
+      - name: http-org
         port: 80
         protocol: HTTP
-      - name: websecure-root
+      - name: https-org-root
         port: 443
         protocol: HTTPS
         hostname: "overburrow.org"
         tlsSecret: overburrow-org-tls
-      - name: websecure-wildcard
+      - name: https-org-wildcard
         port: 443
         protocol: HTTPS
         hostname: "*.overburrow.org"

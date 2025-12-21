@@ -14,7 +14,7 @@ ports:
   traefik:
     port: 9000
     expose:
-      default: false # Keep traefik dashboard not publicly exposed by default
+      default: true # Keep traefik dashboard not publicly exposed by default
     exposedPort: 9000
     protocol: TCP
 
@@ -28,9 +28,6 @@ providers:
   kubernetesGateway:
     enabled: true
     experimentalChannel: false
-
-api:
-  dashboard: true
 
 ingressRoute:
   dashboard:
