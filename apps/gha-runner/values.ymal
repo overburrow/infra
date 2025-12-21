@@ -1,1 +1,1 @@
-githubConfigSecret: actions-runner-controller-secret
+githubConfigSecret: gha-runner-secret
