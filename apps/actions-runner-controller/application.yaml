@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-image-updater
+  name: actions-runner-controller
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   project: default
   sources:
-    - repoURL: https://argoproj.github.io/argo-helm
-      chart: argocd-image-updater
-      targetRevision: 1.0.3
+    - repoURL: oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
+      chart: arc
+      targetRevision: 0.13.0
       helm:
         valueFiles:
           - $infra/apps/argocd-image-updater/values.yaml
@@ -19,10 +19,10 @@ spec:
       ref: infra
     - repoURL: https://github.com/overburrow/infra.git
       targetRevision: main
-      path: apps/argocd-image-updater/manifests
+      path: apps/actions-runner-controller/manifests
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: actions-runner-controller
   syncPolicy:
     automated:
       prune: true
