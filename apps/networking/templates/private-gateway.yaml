@@ -5,6 +5,10 @@ metadata:
   namespace: networking
 spec:
   gatewayClassName: tailscale
+  infrastructure:
+    annotations:
+      tailscale.com/expose: "true"
+      tailscale.com/hostname: {{ .Values.gateways.private.tailscaleHostname | quote }}
   listeners:
     {{- range .Values.gateways.private.listeners }}
     - name: {{ .name }}
