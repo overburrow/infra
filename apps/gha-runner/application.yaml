@@ -27,6 +27,12 @@ items:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+      ignoreDifferences:
+        - group: secrets.infisical.com
+          kind: InfisicalSecret
+          jsonPointers:
+            - /spec/managedKubeSecretReferences/0/creationPolicy
+            - /spec/managedKubeSecretReferences/0/secretType
 
   - apiVersion: argoproj.io/v1alpha1
     kind: Application
