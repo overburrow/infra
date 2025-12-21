@@ -2,6 +2,9 @@ replica:
   allNodes: false
   count: 2
 
+tunnelConfig:
+  protocol: http2
+
 tunnelSecrets:
   base64EncodedPemFile: "ZHVtbXk=" # base64 encoding of "dummy"; cloudflared chart requires this field but we only use the credentials file
   existingConfigJsonFileSecret:
