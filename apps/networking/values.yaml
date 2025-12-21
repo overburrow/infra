@@ -7,10 +7,10 @@ certificates:
 gateways:
   public:
     listeners:
-      - name: http
-        port: 80
-        protocol: HTTP
-        hostname: null # null means "match all" for redirection
+      # - name: http
+      #   port: 80
+      #   protocol: HTTP
+      #   hostname: null # null means "match all" for redirection
       - name: https-org-root
         port: 443
         protocol: HTTPS
