@@ -2,6 +2,9 @@
 
 version: 3
 
+dotenv:
+  - .env
+
 tasks:
   node:off:*:
     vars:
@@ -50,7 +53,6 @@ tasks:
           --from-literal=client_id=$TAILSCALE_CLIENT_ID \
           --from-literal=client_secret=$TAILSCALE_CLIENT_SECRET \
           --dry-run=client -o yaml | kubectl apply -f -
-
   secret:cnpg:
     vars:
       PG_USER: postgres
