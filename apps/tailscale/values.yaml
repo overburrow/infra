@@ -1,0 +1,3 @@
+oauth:
+  clientID: client_id
+  clientSecret: client_secret
