@@ -1,9 +1,9 @@
 replica:
-  # set to false to use Deployment instead of DaemonSet
   allNodes: false
   count: 2
 
 tunnelSecrets:
+  base64EncodedPemFile: "ZHVtbXk=" # base64 encoding of "dummy"; cloudflared chart requires this field but we only use the credentials file
   existingConfigJsonFileSecret:
     name: cloudflared-secret
     key: credentials
