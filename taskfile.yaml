@@ -45,14 +45,16 @@ tasks:
       # Apply the Root App manually to kickstart GitOps
       - kubectl apply -f bootstrap/argocd/root-app.yaml
 
-  secret:tailscale:
+  setup:tailscale:
     cmds:
+      - helm repo add tailscale https://pkgs.tailscale.com/helmcharts
+      - helm repo update
       - |
-        kubectl create secret generic operator-oauth \
-          --namespace tailscale \
-          --from-literal=client_id=$TAILSCALE_CLIENT_ID \
-          --from-literal=client_secret=$TAILSCALE_CLIENT_SECRET \
-          --dry-run=client -o yaml | kubectl apply -f -
+        helm upgrade --install tailscale-operator tailscale/tailscale-operator \
+          --namespace=tailscale \
+          --create-namespace \
+          --set-string oauth.clientId=$TAILSCALE_CLIENT_ID \
+          --set-string oauth.clientSecret=$TAILSCALE_CLIENT_SECRET
 
   secret:cnpg:
     vars:
