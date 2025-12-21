@@ -10,13 +10,12 @@ gateways:
       - name: web
         port: 80
         protocol: HTTP
-        hostname: "*"
-      - name: websecure
+      - name: websecure-root
         port: 443
         protocol: HTTPS
         hostname: "overburrow.org"
         tlsSecret: overburrow-org-tls
-      - name: websecure
+      - name: websecure-wildcard
         port: 443
         protocol: HTTPS
         hostname: "*.overburrow.org"
