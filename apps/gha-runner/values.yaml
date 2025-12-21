@@ -4,3 +4,6 @@ githubConfigUrl: "https://github.com/overburrow"
 controllerServiceAccount:
   name: gha-runner-controller-gha-rs-controller
   namespace: gha-runner
+
+containerMode:
+  type: "dind"
