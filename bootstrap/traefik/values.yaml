@@ -14,8 +14,14 @@ ports:
   traefik:
     port: 9000
     expose:
-      default: true # Keep traefik dashboard not publicly exposed by default
+      default: false
     exposedPort: 9000
+    protocol: TCP
+  # private entrypoint for services exposed on tailnet
+  tailscale:
+    port: 8444
+    expose:
+      default: false
     protocol: TCP
 
 service:

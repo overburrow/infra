@@ -4,11 +4,7 @@ metadata:
   name: private-gateway
   namespace: networking
 spec:
-  gatewayClassName: tailscale
-  infrastructure:
-    annotations:
-      tailscale.com/expose: "true"
-      tailscale.com/hostname: {{ .Values.gateways.private.tailscaleHostname | quote }}
+  gatewayClassName: traefik
   listeners:
     {{- range .Values.gateways.private.listeners }}
     - name: {{ .name }}
@@ -28,9 +24,21 @@ spec:
       {{- end }}
     {{- end }}
 ---
-apiVersion: gateway.networking.k8s.io/v1
-kind: GatewayClass
+apiVersion: v1
+kind: Service
 metadata:
-  name: tailscale
+  name: traefik-private
+  namespace: kube-system
+  annotations:
+    tailscale.com/expose: "true"
+    tailscale.com/hostname: {{ .Values.gateways.private.tailscaleHostname | quote }}
 spec:
-  controllerName: tailscale.com/k8s-operator
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+  selector:
+    app.kubernetes.io/name: traefik
+  ports:
+    - name: https
+      port: 443
+      targetPort: 8444
+      protocol: TCP

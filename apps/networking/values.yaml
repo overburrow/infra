@@ -7,10 +7,10 @@ certificates:
 gateways:
   public:
     listeners:
-      - name: http-org
+      - name: org-web
         port: 8000
         protocol: HTTP
-      - name: https-org-root
+      - name: org-websecure
         port: 8443
         protocol: HTTPS
         tlsSecret: overburrow-org-tls
@@ -18,8 +18,8 @@ gateways:
   private:
     tailscaleHostname: ingress
     listeners:
-      - name: https-dev-root
-        port: 443
+      - name: dev-websecure
+        port: 8444
         protocol: HTTPS
         tlsSecret: overburrow-dev-tls
 
