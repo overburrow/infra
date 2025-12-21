@@ -45,5 +45,3 @@ jobs:
           tags: |
             ghcr.io/overburrow/${{ inputs.image_name }}:${{ inputs.image_tag }}
             ghcr.io/overburrow/${{ inputs.image_name }}:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
