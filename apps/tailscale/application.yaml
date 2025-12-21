@@ -11,12 +11,6 @@ spec:
     - repoURL: https://pkgs.tailscale.com/helmcharts
       chart: tailscale-operator
       targetRevision: 1.92.3
-      helm:
-        valueFiles:
-          - $infra/apps/tailscale/values.yaml
-    - repoURL: https://github.com/overburrow/infra.git
-      targetRevision: main
-      ref: infra
   destination:
     server: https://kubernetes.default.svc
     namespace: tailscale
