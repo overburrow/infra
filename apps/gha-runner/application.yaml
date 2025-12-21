@@ -1,0 +1,66 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationList
+items:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: gha-runner-controller
+      namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: "4"
+    spec:
+      project: default
+      sources:
+        - repoURL: oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
+          chart: gha-runner-scale-set-controller
+          targetRevision: 0.13.0
+          helm:
+            valueFiles:
+              - $infra/apps/gha-runner/values.yaml
+        - repoURL: https://github.com/overburrow/infra.git
+          targetRevision: main
+          ref: infra
+        - repoURL: https://github.com/overburrow/infra.git
+          targetRevision: main
+          path: apps/gha-runner/manifests
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: gha-runner
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: gha-runner-set
+      namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: "4"
+    spec:
+      project: default
+      sources:
+        - repoURL: oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
+          chart: gha-runner-scale-set
+          targetRevision: 0.13.0
+          helm:
+            parameters:
+              - name: githubConfigUrl
+                value: "https://github.com/overburrow/infra"
+              - name: githubConfigSecret
+                value: "gha-runner-secret"
+              - name: controllerServiceAccount.namespace
+                value: "gha-runner"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: gha-runner
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
