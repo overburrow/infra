@@ -1,3 +1,23 @@
+ports:
+  web:
+    port: 8000
+    expose:
+      default: true
+    exposedPort: 80
+    protocol: TCP
+  websecure:
+    port: 8443
+    expose:
+      default: true
+    exposedPort: 443
+    protocol: TCP
+  traefik:
+    port: 9000
+    expose:
+      default: false # Keep traefik dashboard not publicly exposed by default
+    exposedPort: 9000
+    protocol: TCP
+
 service:
   enabled: true
   type: LoadBalancer
@@ -8,3 +28,11 @@ providers:
   kubernetesGateway:
     enabled: true
     experimentalChannel: false
+
+api:
+  dashboard: true
+
+ingressRoute:
+  dashboard:
+    enabled: true
+    entryPoints: ["traefik"]
