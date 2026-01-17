@@ -42,3 +42,21 @@ routes:
     servicePort: 80
     hostname: "overburrow.org"
     visibility: public
+  - name: grafana
+    namespace: monitoring
+    serviceName: prometheus-grafana
+    servicePort: 80
+    hostname: "grafana.overburrow.dev"
+    visibility: private
+  - name: prometheus
+    namespace: monitoring
+    serviceName: prometheus-kube-prometheus-prometheus
+    servicePort: 9090
+    hostname: "prometheus.overburrow.dev"
+    visibility: private
+  - name: alertmanager
+    namespace: monitoring
+    serviceName: prometheus-kube-prometheus-alertmanager
+    servicePort: 9093
+    hostname: "alertmanager.overburrow.dev"
+    visibility: private
