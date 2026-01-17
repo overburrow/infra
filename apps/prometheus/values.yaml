@@ -3,7 +3,6 @@ grafana:
   # Use the secret created by the taskfile instead of a plaintext password.
   admin:
     existingSecret: "grafana-admin-secret"
-    secretKey: "admin-password"
 
 # --- Persistence ---
 prometheus:

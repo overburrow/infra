@@ -115,6 +115,7 @@ tasks:
 
   secret:grafana:
     vars:
+      GF_USER: admin
       GF_PASSWORD:
         sh: openssl rand -base64 24
     cmds:
@@ -123,5 +124,6 @@ tasks:
       - |
         kubectl create secret generic grafana-admin-secret \
           --namespace monitoring \
+          --from-literal=admin-user={{.GF_USER}} \
           --from-literal=admin-password="{{.GF_PASSWORD}}" \
-          --dry-run=client -o yaml | kubectl apply -f -
+          --dry-run=client -o yaml | kubectl apply -f - --overwrite
